@@ -1,25 +1,138 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14 d17.14
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{126B668C-2B6D-477D-99FB-0159CBBE8B7A}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{126B668C-2B6D-477D-99FB-0159CBBE8B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{126B668C-2B6D-477D-99FB-0159CBBE8B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{126B668C-2B6D-477D-99FB-0159CBBE8B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{126B668C-2B6D-477D-99FB-0159CBBE8B7A}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {457892F2-A65E-4FB6-92D8-AB7CFC9E7E40}
-	EndGlobalSection
-EndGlobal
+namespace ConsoleApp2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Cat cat1 = new Cat(2);
+            cat1.Method1(); cat1.Method2(); cat1.Method3();
+            Animal cat2 = new Cat(2);
+            //method cat 1
+           // method cat 2
+            //method cat 3
+            cat2.Method1(); cat2.Method2(); cat2.Method3();
+            //animal method 2
+            //method cat 2
+            //method cat 3
+        }
+    }
+    public abstract class Animal
+    {
+        private int _number;
+        public abstract string Word { get; } // абстрактное свойство 
+
+        //public virtual string Word => "hi"; // виртуальное свойство 
+        public Animal(int number)
+        {
+            _number = number;
+        }
+        public void Method1() // обычный миетод базового класса
+        {
+            Console.WriteLine("animal method 2");
+        }
+        public virtual void Method2() // виртуальный метод базового класска, можно переопределять и не переопределять с наследниках
+        {
+            Console.WriteLine("animal method 2");
+        }
+        // никакого тела не пишем в абстрактном методе но в наследних обязателен этот метод
+        public abstract void Method3(); // абстрактный метод базового класска 
+        
+
+    }
+    // здесь пытаемся все переопределеить
+    public class Cat: Animal
+    {
+        public override string Word => "byyyye"; // переопределяем абстрактное свойство  override - обязательно
+        public Cat(int number): base(number)
+        {
+
+        }
+        public new void Method1() // скрыли обычный  метод
+        {
+            Console.WriteLine("method cat 1");
+        }
+        public override void Method2()// переопределили виртуальный метод
+        {
+            Console.WriteLine("method cat 2");
+        }
+        public override void Method3() //переопрделили абстрактный метод
+        {
+            Console.WriteLine("method cat 3");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //public class Animal
+    //{
+    //    protected string _name;
+    //    protected int _age;
+    //    public Animal(int age, string name)
+    //    {
+    //        _age = age;
+    //        _name = name;
+    //    }
+    //    public virtual void Method()
+    //    {
+    //        Console.WriteLine("method");
+    //    }
+    //    public virtual void Voice() //virtual для того чтобы изменить для кошек в наследниках
+    //    {
+    //        Console.WriteLine("?");
+    //    }
+    //    public void Print()
+    //    {
+    //        Console.WriteLine(_name + " " + _age);
+    //    }
+    //}
+    //public class Cat : Animal
+    //{
+    //    private int _voice;
+    //    public int Voic => _voice;
+    //    public Cat(int age, string name, int voice) : base(age, name) // (int age123, string name123, int voice123) : base(age123, name123)
+    //    {
+    //        _age += 2; // можно отредактировать из род класса если нужно и если род в классе доступно
+    //        _voice = voice;
+    //    }
+    //    public override void Method()// переопределение - override 
+    //    {
+    //        Console.WriteLine("cat method");
+    //    }
+    //    public override void Voice()
+    //    {
+    //        Console.WriteLine("МЯУ");
+    //    }
+    //    public void Print()
+    //    {
+    //        Console.WriteLine(_voice + " " + _age + " " + _name);
+    //    }
+    
+}
+    
+
