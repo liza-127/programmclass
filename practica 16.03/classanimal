@@ -1,0 +1,43 @@
+//public class Animal
+    //{
+    //    protected string _name;
+    //    protected int _age;
+    //    public Animal(int age, string name)
+    //    {
+    //        _age = age;
+    //        _name = name;
+    //    }
+    //    public virtual void Method()
+    //    {
+    //        Console.WriteLine("method");
+    //    }
+    //    public virtual void Voice() //virtual для того чтобы изменить для кошек в наследниках
+    //    {
+    //        Console.WriteLine("?");
+    //    }
+    //    public void Print()
+    //    {
+    //        Console.WriteLine(_name + " " + _age);
+    //    }
+    //}
+    //public class Cat : Animal
+    //{
+    //    private int _voice;
+    //    public int Voic => _voice;
+    //    public Cat(int age, string name, int voice) : base(age, name) // (int age123, string name123, int voice123) : base(age123, name123)
+    //    {
+    //        _age += 2; // можно отредактировать из род класса если нужно и если род в классе доступно
+    //        _voice = voice;
+    //    }
+    //    public override void Method()// переопределение - override 
+    //    {
+    //        Console.WriteLine("cat method");
+    //    }
+    //    public override void Voice()
+    //    {
+    //        Console.WriteLine("МЯУ");
+    //    }
+    //    public void Print()
+    //    {
+    //        Console.WriteLine(_voice + " " + _age + " " + _name);
+    //    }
