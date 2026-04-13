@@ -1,0 +1,150 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Runtime.Serialization.Formatters;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // Contains 
+            //
+            string world = "Hello";
+            Console.WriteLine(world.Contains("lo")); // true
+            // если строка содержит подстроку "lo" то вывести фразу success
+            if (world.Contains("lo")) //  (world.Contains("lo") == true) - можно и так
+            {
+                Console.WriteLine("даааа");
+            }
+            else
+            {
+                Console.WriteLine("нету");
+            }
+
+            //
+            char[] a = { '2', 's', '.' };
+            Console.WriteLine(a.Contains('d')); // false  
+            //
+
+            char[] punc = { '.', '!', '?', ',', ':', '\"', ';', '–', '(', ')', '[', ']', '{', '}', '/' };
+            char x = '.';
+            if (punc.Contains(x))
+            {
+                Console.WriteLine("the symbol is punc");
+            }
+            else
+            {
+                Console.WriteLine("not");
+            }
+            //
+
+
+            // Replace
+            string text = "cat and dog and dog and dog";
+            Console.WriteLine(text.Replace("dog", "kira")); // cat and kira and kira and kira заменит все 
+
+            string text1 = "cat catasprofa";
+            // заменить кот но второе может тоже заменится хотя это не явл словом кот
+            text1 = text1.Replace("cat", "dog"); // dog dogasprofa в split решение 
+            // просто если вызвать метод replace то у изначальной незмениися зачение нужно присваивать только чемуто 
+
+
+            // Trim 
+            string word1 = " cat ";
+            string word2 = " ?!cat, ";
+            word1 = word1.Trim(' ');
+            Console.WriteLine(word1); // удалятся пробелы побокам
+
+            word2 = word2.Trim(new char[] {' ', '!', '?', ','}); //cat
+            Console.WriteLine(word2);
+            // 
+            word1 = word1.Trim(",!.".ToArray());// ToArray() -превращает в массив char или можно .ToCharArray()
+            //
+
+            // Split 
+
+            string textik = "hello, my dear 2 friends!";
+            string[] arraytext = textik.Split(' '); // в массив разделит их 
+            //foreach (string aa in arraytext)
+            //{
+            //    Console.WriteLine(aa);
+            //}
+            //for (int i = 0;i < arraytext.Length; i++)
+            //{
+            //    Console.WriteLine(arraytext[i]);
+            //}
+            //string[] arraytext2 = textik.Split(punc , StringSplitOptions.RemoveEmptyEntries); //  StringSplitOptions.RemoveEmptyEntries - пустые штуки убирает
+            //for (int i = 0; i < arraytext.Length; i++)
+            //{
+            //    Console.WriteLine(arraytext2[i]);
+            //}
+            //
+
+
+            // Join 
+            string[] derty = { "aasds", "3224" };
+            string text33 = String.Join(" ", derty);
+            Console.WriteLine(text33);
+            //
+
+            // IsDigit/ IsLetter
+            // возвращают true или false
+            char s = 'a';
+            Console.WriteLine(char.IsLetter(s));// буква ли
+            Console.WriteLine(char.IsDigit(s));// цифра ли
+            Console.WriteLine(char.IsPunctuation(s)); // проверка на пунктуацию
+            Console.WriteLine(char.IsLower(s)); // маленькая ли
+            Console.WriteLine(char.IsUpper(s));// заглавная ли 
+            //
+
+
+            // Toupper / ToLower
+            string wordd = "Hello";
+            Console.WriteLine(wordd.ToLower());// hello
+            Console.WriteLine(wordd.ToUpper());// HELLO
+            //
+
+            // 
+            string vowels = "уеиаоюя";
+            vowels += vowels.ToUpper();
+            Console.WriteLine(vowels);
+
+
+            // задание  
+            // создать массив из текста взять только слова 
+            string input = "Hello, my dear 2 friends!";
+            string[] input1 = input.Split(' ');
+
+            string[] finalyworld = new string[0];
+            for (int i = 0; i < input1.Length; i++)
+            {
+                string itogworld = input1[i].Trim(punc);
+                Console.WriteLine(itogworld);
+
+                bool f = true;
+                foreach(char e in itogworld)
+                {
+                    if ( char.IsDigit(e) || punc.Contains(e)) // провряем нен цифра ли или нет в середение слова азпятой какойнийбудь или еще чегото лишнего
+                    {
+                        f = false;
+                    }
+                }
+                if (f )
+                {
+                    Array.Resize(ref finalyworld, finalyworld.Length + 1);
+                    finalyworld[finalyworld.Length-1] = itogworld.ToLower();
+                }
+
+            }
+            foreach(string e in finalyworld)
+            {
+                Console.WriteLine(e);
+            }
+        }
+    }
+}
