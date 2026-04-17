@@ -1,1 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp7
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // линк запросы
+            // Sum
+            int[] numbers = { 1, 2, 3, 4 };
+            int result = numbers.Sum(x => x % 2 );
+            Console.WriteLine(result);
+
+           
+
+            string[] words = { "hello", "my", "friends"};
+            result = words.Sum(x => x.Length);
+            // x => x.Length это эквевалентно тому что ниже 
+            //public int E(string x)
+            //{
+            //    return x.Length;
+            //}
+            Console.WriteLine(result);
+
+
+            // массив структуры
+            Example[] examples = new Example[3];
+            for (int i = 0;i < 3; i++)
+            {
+                examples[i] = new Example(i);
+            }
+
+            //  Count 
+            string[] words1 = { "hello", "my", "f" };
+            int result2 = words.Count(x => x.Length % 2 == 0);
+            Console.WriteLine(result2);
+
+            // Any,  ALL
+            bool f1 = words1.Any(x => x.Length%3 == 0); // хотя бы один элемент удвлетворяет этому условию
+            bool f2 = words1.All(x => x.Length > 1); // верно ли для каждого элемента
+            Console.WriteLine(f1 + " " + f2);
+
+
+            // Select , Whereб GroupBy, Distinct
+            string[] words2 = { "hello", "my", "f" };
+            int[] word2len = words2.Select(x => x.Length).ToArray(); // селект преобразует каждое слово а тоэррей преобразовывает в массив 
+            string[] longwords = words.Where(x => x.Length > 2).ToArray(); // оставляет только те которые удовлетворяют условию
+
+
+            int[] wordresult = words2.Select(x => x.Length).Where(x => x > 2).ToArray(); // сразу преобразовывет в длину и провреяет больше ли двух
+
+            // any со  строками 
+            string word = "123he";
+            bool f = word.Any(x => char.IsDigit(x)); // проверяет есть ли в слове хоть одна циферка
+            //   string[] word2len = words2.Select(x => x.Trim(' ')).ToArray(); - убрать пробелы у каждого слова
+        }
+        public struct Example
+        {
+            private int _num;
+            public int Num => _num;
+
+            public Example(int num)
+            {
+                _num = num;
+            }
+        }
+
+    }
+}
 
