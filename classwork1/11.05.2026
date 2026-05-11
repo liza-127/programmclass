@@ -1,0 +1,140 @@
+using System.Reflection.Metadata;
+using System.Security.Cryptography;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // написать юсинг using System.Xml.Serialization; наверху
+
+            // обьект сереализации
+            Movie movie1 = new Movie(12, "spider-man");
+            movie1.Add(7);
+            movie1.Add(8);
+            //MovieDTO moviedto = new MovieDTO(movie1.Duration, movie1.Name); для первого конструктора(первый способ) в классе так пишем
+            MovieDTO moviedto = new MovieDTO(movie1);
+           
+
+            //создать путь для файла xml
+            string folderpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filepath = Path.Combine(folderpath, "movie.xml");
+
+
+            // создаем xml- сереализацию
+
+
+            // -класс должен иметь конструктор без параметра
+            // класс должен быть публичным и вне программ 
+            // -в классе все свойства должны быть публичными get и set 
+            var serializer = new XmlSerializer(typeof(MovieDTO));
+
+
+            // оргинальный обьект -> Дто обьект -> отдать его в серелизатор
+            // десерелизуем обьект -> получает ДТО обьект -> оригинальный обьект 
+
+            using (var writer = new StreamWriter(filepath)) // writer - поток,открываем поток чтобы записать 
+            { 
+                serializer.Serialize(writer, moviedto); // передаем поток после чего то что серелиазуем (обяз дто)
+            }
+            // метод Serialize - ждет всегда поток 
+            // после этого создастся файл 
+
+
+            // десереализация 
+
+
+            // когда он прочитает файл он превратит его в дто
+            MovieDTO moviedto2;
+            // поток для чтения 
+            using (var read = new StreamReader(filepath))
+            {
+               // moviedto2 =  serializer.Deserialize(read); // горит красным потому что Deserialize возвращает obj но мы то точно знаем что он возвращает поэтому приводим к дто
+                moviedto2 = (MovieDTO)serializer.Deserialize(read);
+            }
+           
+          
+            //преобразовываем в обычный изначальный movie
+            Movie movie2 = new Movie(moviedto2.Duration, moviedto2.Name);
+
+            // передаем массив 
+            for (int i = 0; i < moviedto2.Marks.Length; i++)
+            {
+                movie2.Add(moviedto2.Marks[i]);
+            }
+
+            Console.WriteLine(movie2.Name);
+
+            // проверка десереализации и сереализации
+            if (CompatMovies(movie1, movie2))
+            {
+                Console.WriteLine("да все прошло успешно");
+            }
+            else
+            {
+                Console.WriteLine("нет");
+            }
+        }
+        private static bool CompatMovies(Movie m1, Movie m2)
+        {
+            if (m1.Name != m2.Name) return false;
+            if (m1.Duration != m2.Duration) return false;
+            if (m1.Marks.Length != m2.Marks.Length) return false;
+            for (int i = 0; i < m1.Marks.Length; i ++)
+            {
+                if (m1.Marks[i]  != m2.Marks[i]) return false;
+            }
+            return true;
+        }
+    }
+   
+    public class Movie
+    {
+        private int _duration;
+       private string _name;
+        private int[] _marks;
+
+        public int Duration => _duration;
+        public string Name => _name;
+        public int[] Marks => _marks.ToArray();
+        public Movie(int duration, string name)
+        {
+            _duration = duration;
+            _name = name;
+            _marks = new int[0];
+        }
+
+        public void Add(int a)
+        {
+            Array.Resize(ref _marks, _marks.Length+1);
+            _marks[_marks.Length-1] = a;
+        }
+
+    }
+    public class MovieDTO
+    {
+        public int Duration { get; set; } // автосвойства
+        public string Name { get; set; }
+        public int[] Marks { get; set; }
+        public MovieDTO() // нужен xml
+        {
+
+        }
+        //public MovieDTO(int duration, string name, int[] marks ) // первый способ 
+        //{
+        //    Duration = duration;
+        //    Name = name;
+        //      Marks = marks;
+        //}
+        public MovieDTO(Movie movie)
+        {
+            Name = movie.Name;
+            Duration = movie.Duration;
+            Marks = movie.Marks;
+        }
+
+    }
+     
+    }
